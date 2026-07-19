@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS autores (
 -- 2. Tabela de Livros
 CREATE TABLE IF NOT EXISTS livros (
     id SERIAL PRIMARY KEY,
-    titulo VARCHAR(200) NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
     autor_id INT NOT NULL,
     quantidade_disponivel INT NOT NULL DEFAULT 0,
-    CONSTRAINT fk_autor FOREIGN KEY (autor_id) REFERENCES autores(id) ON DELETE CASCADE,
+    CONSTRAINT fk_autor FOREIGN KEY (autor_id) REFERENCES autores(id) ON DELETE RESTRICT,
     CONSTRAINT chk_quantidade CHECK (quantidade_disponivel >= 0)
 );
 
