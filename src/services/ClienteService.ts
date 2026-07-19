@@ -13,6 +13,11 @@ export class ClienteService {
     if (!email || email.trim() === "") throw new Error("O e-mail é obrigatório.");
     if (!telefone || telefone.trim() === "") throw new Error("O telefone é obrigatório.");
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      throw new Error("O formato do e-mail digitado é inválido. Certifique-se de usar um e-mail correto (ex: nome@email.com).");
+    }
+
     const emailExistente = await this.clienteRepository.buscarPorEmail(email.trim());
     if (emailExistente) throw new Error("Já existe um cliente cadastrado com este e-mail.");
 
@@ -39,6 +44,11 @@ export class ClienteService {
     if (!nome || nome.trim() === "") throw new Error("O nome não pode ficar vazio.");
     if (!email || email.trim() === "") throw new Error("O e-mail não pode ficar vazio.");
     if (!telefone || telefone.trim() === "") throw new Error("O telefone não pode ficar vazio.");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      throw new Error("O formato do novo e-mail digitado é inválido.");
+    }
 
     if (email.trim() !== atual.email) {
       const emailExistente = await this.clienteRepository.buscarPorEmail(email.trim());
