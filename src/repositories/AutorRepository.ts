@@ -30,4 +30,10 @@ export class AutorRepository {
     const query = 'DELETE FROM autores WHERE id = $1;';
     await pool.query(query, [id]);
   }
+
+  async possuiLivrosCadastrados(autorId: number): Promise<boolean> {
+    const query = 'SELECT 1 FROM livros WHERE autor_id = $1 LIMIT 1;';
+    const resultado = await pool.query(query, [autorId]);
+    return resultado.rows.length > 0;
+  }
 }

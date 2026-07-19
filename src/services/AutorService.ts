@@ -34,10 +34,16 @@ export class AutorService {
 
   async remover(id: number): Promise<void> {
     await this.buscarPorId(id);
+    
+    const possuiLivros = await this.autorRepository.possuiLivrosCadastrados(id);
+    if (possuiLivros) {
+      throw new Error("Não é possível remover o autor. Ele possui livros cadastrados vinculados ao seu nome.");
+    }
+
     try {
       await this.autorRepository.remover(id);
     } catch (error) {
-      throw new Error("Erro ao remover o autor. Certifique-se de que ele não possui livros cadastrados vinculados.");
+      throw new Error("Erro ao remover o autor no banco de dados.");
     }
   }
 }
